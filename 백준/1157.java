@@ -15,15 +15,15 @@ public class Main {
 		
 		for(int i = 0; i < charArr.length; i++) {
 			for(int j = 0; j < alphabetArr.length; j++) {
-				if((int)(charArr[i] - 65) == i) { // char형 대문자 A - 65 = 0
-					alphabetArr[i] += 1; // 빈도수 1 증가
+				if((charArr[i] - 65) == j) { // char형 대문자 A - 65 = 0
+					alphabetArr[j] += 1; // 빈도수 1 증가
 					break;
 				}
 			}
 		}
-		
-		int max = alphabetArr[0];
-		char alphabet = 0;
+
+		int max = alphabetArr[0]; // 초기 max값 설정 A 빈도수
+		char alphabet = 65; // 초기 알파벳 설정 A
 		int second = 0;
 		
 		for(int i = 1; i < alphabetArr.length; i++) {
@@ -41,5 +41,3 @@ public class Main {
 		
 	}
 }
-
-// 뭐가 문제냐.. 낼 다시 보기 (220224)
