@@ -16,15 +16,12 @@ public class Main {
 		int[] n2Arr = new int[3];
 		
 		// 역순으로 재배치
-		for(int i = 3; i > 3; i--) {
-			n1Arr[i] = n1 % 10;
+		for(int i = 0; i < 3; i++) {
+			n1Arr[i] = n1 % 10; // 일의 자리 수 가져오기
 			n2Arr[i] = n2 % 10;
 			n1 /= 10;
 			n2 /= 10;
 		}
-		
-		for(int i = 0; i<3; i++)
-			System.out.println(n1Arr[i]);
 		
 		// 숫자 비교
 		for(int i = 0; i < 3; i++) {
