@@ -9,16 +9,20 @@ public class Main {
 		
 		// dz는 무조건 하나의 알파벳 --> if 에서 우선이 되어야 함
 		
-		char[] croatiaArr = bf.readLine().toCharArray();
+		char[] wordArr = bf.readLine().toCharArray();
+		char[] croatiaArr = new char[wordArr.length + 2]; // if문 ArrayIndexOutOfBoundsException 방지할 +2만큼 긴 배열
+		
+		for(int i = 0; i < wordArr.length; i++) {
+			croatiaArr[i] = wordArr[i]; // 배열 복사
+		}
+		
 		int wordLength = 0; // 글자수
-		int i = 0;
 		
 		// equals() Object 클래스에 포함되어 Java에서 생성된 모든 클래스에 상속을 통해 전달되는 메소드입니다.
 		// 그리고 메소드이기 때문에 프리미티브가 아닌 객체에 의해서만 호출될 수 있습니다.
 		// StringTokenizer로 뽑은 건 되던데 뭐지 --> 알아보기
 		
-		try {
-			for(i = 0; i < croatiaArr.length; i++) {
+			for(int i = 0; i < croatiaArr.length-2; i++) {
 				if(croatiaArr[i] == 'd'){ // d
 					if(croatiaArr[i+1] == 'z' && croatiaArr[i+2] == '=')
 						i += 2;
@@ -55,12 +59,6 @@ public class Main {
 					wordLength++;
 				}
 			}
-		} catch (Exception ArrayIndexOutOfBoundsException) {
-			if(i - 2 < 0) // i가 try문에서 이어지는 게 맞을까? --> 아닌듯.
-				wordLength += 2;
-			else
-				wordLength += 1;
-		}
 		
 		
 		System.out.println(wordLength);
@@ -69,3 +67,4 @@ public class Main {
 
 // 220307 런타임에러(croatiaArr[i+1] --> ArrayIndexOutOfBoundsException)
 // 220308 catch문 문제있음
+// 220309 배열 길이를 if문에 맞도록 +2만큼 늘려서 풀이
