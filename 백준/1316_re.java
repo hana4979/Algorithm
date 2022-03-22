@@ -15,23 +15,27 @@ public class Main {
 			char[] word = str.toCharArray(); // char형으로 변환
 			char[] alphabet = new char[26];
 
-			for (int j = 0; j < word.length; j++) {
-				if (j == 0 || alphabet[j] == 0)
-					alphabet[j]++;
-				else if (word[j - 1] != word[j])
-					break;
-				else {
-					// j == word.length : true일 시 count++ 추가하기
-				}
-			}
+			if (check(word, alphabet))
+				count++;
 
 		}
-
 		System.out.println(count);
 
 	}
 
+	public static boolean check(char[] word, char[] alphabet) {
+		for (int j = 0; j < word.length; j++) {
+			if (j == 0 || alphabet[word[j]-'a'] == 0)
+				alphabet[word[j]-'a']++;
+			else if (word[j - 1] != word[j])
+				return false;
+			else {
+				alphabet[word[j]-'a']++;
+			}
+		}
+		return true;
+	}
 }
 
 // word[j-1] == word[j] 의 경우 굳이 빈도를 늘릴 필요 없음
-// 220321 뭔가 메소드를 이용해서 보기 좋은 코드를 만들 수 있을 것 같음
+// for문이 끝나면 자연스럽게 count++; 해주는 식으로 바꿈
