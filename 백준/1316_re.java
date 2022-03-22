@@ -29,9 +29,6 @@ public class Main {
 				alphabet[word[j]-'a']++;
 			else if (word[j - 1] != word[j])
 				return false;
-			else {
-				alphabet[word[j]-'a']++;
-			}
 		}
 		return true;
 	}
