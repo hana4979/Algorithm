@@ -19,7 +19,7 @@ public class Main {
 
 		System.out.println((int) mean(arr)); // 산술평균
 		System.out.println(median(arr)); // 중앙값
-		// System.out.println(mode(arr)); // 최빈값
+		System.out.println(mode(arr)); // 최빈값
 		System.out.println(range(arr)); // 범위
 
 	}
@@ -39,48 +39,46 @@ public class Main {
 	public static int median(int[] arr) {
 		return arr[arr.length / 2];
 	}
-	
-	// 220330 mode 구현중... 
+
+	// 220330 mode 구현중...
 	// 최빈값 : N개의 수들 중 가장 많이 나타나는 값
-	public static void mode(int[] arr) {
+	public static int mode(int[] arr) {
 		int[] freq = new int[arr.length]; // 빈도수 담을 배열
 
 		for (int i = 0; i < arr.length; i++) {
 			if (i == 0)
 				freq[i] += 1;
 
-			for (int j = 0; j < i; j++) {
+			for (int j = i; j < arr.length; j++) {
 				if (arr[i] == arr[j]) {
 					freq[j] += 1;
+					continue;
 				}
 			}
 			freq[i] += 1;
 		}
-		
+
 		int[] copy = new int[freq.length];
-		for(int i = 0; i < freq.length; i++) { // 배열 복사
+		for (int i = 0; i < freq.length; i++) { // 배열 복사
 			copy[i] = freq[i];
 		}
-		
-		Arrays.sort(freq); // 오름차순 정렬
-		
-		int len = freq.length;
-		if(freq[len] == freq[len-1]) {
-			
-		} else {
-			
-		}
-		
-		// 최빈값이 몇 번째에 있는지 찾기
-		public static int findMode(int[] check, int v) {
-			for(int i = 0; i < check.length; i++) {
-				if(check[i] == v) { // 빈도를 찾았다면
-					
+
+		Arrays.sort(freq); // 오름차순 정렬 --> 문제 1. 빈도를 기준으로 정렬하면 어떤 정수가 많이 나왔는지 모름.
+
+		int len = freq.length - 1;
+		if (freq[len] == freq[len - 1]) { // --> 문제 2. 값 하나 불러올 때 ArrayIndexOutOfBoundsException 오류
+			// 최빈값이 몇 번째에 있는지 찾기
+			for (int i = len - 1; i > 0; i--) {
+				if (freq[i] != freq[len]) {
+					return freq[i]; // 문제 3. 리턴값은 빈도값이 아니라 입력한 수여야 함
 				}
-				
 			}
+		} else {
+			return freq[1];
 		}
 		
+		return 0;
+
 	}
 
 	// 범위 : N개의 수들 중 최댓값과 최솟값의 차이
@@ -93,3 +91,5 @@ public class Main {
 			return Math.abs(arr[0]) + Math.abs(arr[arr.length - 1]);
 	}
 }
+
+// 220405 최빈값(Mode)부분 어떻게든 살려보려 했으나 다시 짜야할 듯
