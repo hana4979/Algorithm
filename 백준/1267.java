@@ -17,18 +17,20 @@ public class Main {
 		for(int i = 0; i < countCall; i++) {
 			int value = Integer.parseInt(timeCall.nextToken());
 			
-			ys = (value / 30) * 10;
-			if(value % 30 != 0) ys += 10;
+			ys += (value / 29) * 10;
+			if(value % 29 != 0) ys += 10;
 			
-			ms = (value / 60) * 15;
-			if(value % 60 != 0) ms += 15;
+			ms += (value / 59) * 15;
+			if(value % 59 != 0) ms += 15;
 		}
 		
-		if(ys >= ms)
-			System.out.print("Y" + ys);
+		if(ms > ys)
+			System.out.print("Y" + " " + ys);
+		else if(ys == ms)
+			System.out.println("Y" + " " + "M" + " " + ys);
 		else
-			System.out.print("M" + ms);
+			System.out.print("M" + " " + ms);
 	}
 }
 
-// 220511 널부러진 식 깔끔하게 정리하고 마무리하기
+// 220512 논리 오류
