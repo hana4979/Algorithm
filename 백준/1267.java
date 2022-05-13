@@ -17,11 +17,10 @@ public class Main {
 		for(int i = 0; i < countCall; i++) {
 			int value = Integer.parseInt(timeCall.nextToken());
 			
-			ys += (value / 29) * 10;
-			if(value % 29 != 0) ys += 10;
+			// /30 = 0 / 1 / 2 / 3 ... 에 따라 가격이 일정하게 정해짐
+			ys += ((value / 30) + 1) * 10;
 			
-			ms += (value / 59) * 15;
-			if(value % 59 != 0) ms += 15;
+			ms += ((value / 60) + 1) * 15;
 		}
 		
 		if(ms > ys)
@@ -32,5 +31,3 @@ public class Main {
 			System.out.print("M" + " " + ms);
 	}
 }
-
-// 220512 논리 오류
