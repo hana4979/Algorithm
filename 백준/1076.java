@@ -6,16 +6,17 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		int resistanceValue = 0;
+		String resistanceValue = "";
 		
 		for(int i = 1; i >= 0; i--) {
 			String resistanceColor = bf.readLine();
-			resistanceValue += colorValue(resistanceColor) * Math.pow(10, i);
+			resistanceValue += colorValue(resistanceColor);
 		}
 		
 		String resistanceColor = bf.readLine();
-		resistanceValue *= Math.pow(10, colorValue(resistanceColor));
-		
+		// 저항의 곱 값만큼 String 형식의 0 붙여주기
+		for(int howMany = 0 ; howMany < colorValue(resistanceColor); howMany++)
+			resistanceValue += "0";
 		System.out.println(resistanceValue);
 	}
 	
@@ -60,4 +61,6 @@ public class Main {
 	}
 }
 
-// 220523 white * 3 의 경우 int 최댓값을 넘어감 --> String으로 붙이기?
+// 220524 저항 값 int형태로 거듭제곱 사용 + 곱 값 string "0" 붙임 --> 실패
+// 처음부터 String 값으로 붙이기 --> 실패
+// 21억이 넘어가는 값 어떻게 '계산'해 표현할지 생각
