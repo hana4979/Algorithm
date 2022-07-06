@@ -4,38 +4,31 @@ import java.io.IOException;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-		
+
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		
+
 		int repeat = Integer.parseInt(bf.readLine());
-		String file = " ";
-		char[] fileName = new char[29]; // 알파벳 28 + 부호 .
-		
-		for(int i = 0; i < repeat; i++) {
-			
+		String file = bf.readLine();
+		char[] fileCompare = new char[file.length()];
+
+		// 배열에 첫번째로 입력받은 값 넣기
+		for (int i = 0; i < file.length(); i++) {
+			fileCompare[i] = file.charAt(i);
+		}
+
+		for (int i = 0; i < repeat - 1; i++) {
+
 			file = bf.readLine();
-			
-			/* ==> 첫번째 string 저장하고 true or false 로 비교출력 해보기
-			for(int j = 0; j < file.length(); j++){
-				if(String.valueOf(file.charAt(j)).equals(".")) { // 문자 . 이 온다면
-					fileName[28]++; // 알파벳을 제외한 임의의 자리 28번째 인덱스에 저장
-				} else {
-					fileName[file.charAt(j) - 97]++; // 한 글자씩 저장
+
+			for (int j = 0; j < file.length(); j++) {
+				if (fileCompare[j] != file.charAt(j)) { // 첫번째 글자와 비교했을 때 값이 같지 않다면
+					fileCompare[j] = 63; // "?" 물음표 넣기
 				}
 			}
-			*/
 		}
-		
-		// 비교 + 점 . 나왔을 경우 추가
-		for(int i = 0; i < file.length(); i++) {
-			if(fileName[file.charAt(i) - 97] == repeat) {
-				System.out.print(file.charAt(i));
-			} else {
-				System.out.print("?");
-			}
-		}
-		
+
+		for (int i = 0; i < fileCompare.length; i++)
+			System.out.print(fileCompare[i]);
+
 	}
 }
-
-// . 의 경우 아스키코드 46인데.. 예외로 if처리를 해주자
