@@ -11,6 +11,7 @@ public class Main {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 
 		int n = Integer.parseInt(bf.readLine());
+		int studentCount = 0; // 귀걸이를 돌려받지 못한 학생 수 세기
 
 		do {
 			// 귀걸이 뺏긴 학생 정보를 담을 HashMap
@@ -36,8 +37,7 @@ public class Main {
 				}
 			}
 
-			// 출력형식 손 보기. HashMap에 값이 있는 만큼 돌리는 게 아닌 듯.
-			int studentCount = 0; // 귀걸이를 돌려받지 못한 학생 수 세기
+			studentCount++;
 			for (Map.Entry<Integer, String> entry : student.entrySet()) {
 				System.out.println(studentCount + " " + entry.getValue());
 			}
