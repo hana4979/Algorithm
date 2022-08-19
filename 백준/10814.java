@@ -1,31 +1,38 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
-import java.util.TreeMap;
 import java.util.StringTokenizer;
+import java.util.Arrays;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-
-		// 부모 키값과 비교해서 키 값이 낮은 것을 왼쪽 자식 노드에, 키값이 높은 것은 오른쪽 자식 노드에 저장
-		// 키는 저장과 동시에 자동 오름차순으로 정렬
-		TreeMap<Integer, String> membership = new TreeMap<>();
-
+		
 		int n = Integer.parseInt(bf.readLine());
-
-		for (int i = 0; i < n; i++) {
+		// 수정1 : char형으로 받기
+		String[][] membership = new String[n][n];
+		
+		for(int i = 0; i < n; i++) {
 			StringTokenizer token = new StringTokenizer(bf.readLine());
-
-			// TreeMap에 회원정보 기입 (나이 --> key , 이름 --> value)
-			membership.put(Integer.parseInt(token.nextToken()), token.nextToken());
+			for(int j = 0; j <= 1; j++) {
+				membership[i][j] = token.nextToken();
+			}
 		}
-
-		// * entrySet() / keySey() 사용 불가 --> key값(=나이)이 같을 수 있음
+		
+		// 수정2 : 2차원 배열 오름차순 정렬
 		/*
-		 * System.out.println(key + " " + value); });
-		 */
-
+		Arrays.sort(membership, new Comparator<int[]>() {
+			@Override
+			public int compara(String[] o1, String[] o2) {
+				if(o1[0] == o2[0]) {
+					return 
+				}
+			}
+		})
+		*/
+		
 	}
 }
+
+// 출력 시 KeySet() 사용 --> 나이 중복의 경우 출력 X ==> Map 사용 불가
