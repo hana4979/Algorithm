@@ -39,11 +39,14 @@ public class Main {
 				result.append("H");
 			} else if (SecretWord.equals(G) || wrongCheck(SecretWord, G)) {
 				result.append("G");
+			} else { // 모르는 문자가 있을 경우, 처음 나오는 위치 저장
+				result.delete(0, i); // result 값 삭제
+				result.append(i + 1);
+				break;
 			}
 		}
 		
 		System.out.print(result);
-		// (추가) 모르는 문자가 있을 경우, 이것이 처음 나오는 위치 출력
 	}
 
 	public static boolean wrongCheck(String str, String alphabet) {
@@ -54,8 +57,8 @@ public class Main {
 				wrong++; // wrong 변수 값 증가
 			}
 		}
-
-		if (wrong >= 2)
+		
+		if (wrong != 1) // 문자 하나만 틀려야 식별가능
 			return false;
 		else
 			return true;
