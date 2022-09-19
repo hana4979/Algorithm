@@ -24,7 +24,16 @@ public class Main {
 
 			while (!check(basket, dropApple)) { // basket이 떨어지는 사과 위치에 없다면
 				// basket을 오른쪽 혹은 왼쪽으로 한 칸 이동
-
+				if (basket[basketSize - 1] < dropApple) { // 떨어지는 사과가 basket보다 오른쪽에 있다면
+					for (int j = 0; j < basketSize; j++) {
+						basket[j]++; // 바구니를 한 칸씩 이동
+					}
+				} else { // 떨어지는 사과가 basket보다 왼쪽에 있다면
+					for (int j = 0; j < basketSize; j++) {
+						basket[j]--;
+					}
+				}
+				move++;
 			}
 
 		}
