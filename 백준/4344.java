@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -27,15 +26,14 @@ public class Main {
 			int count = 0; // 평균 넘는 학생의 수
 
 			for (int k = 0; k < student; k++) {
-				if (score[k] >= scoreAverage) { // 평균보다 점수가 높다면
+				if (score[k] > scoreAverage) { // 평균보다 점수가 높다면
 					count++; // 평균 넘는 학생 수 증가
 				}
 			}
-			
-			// 출력값 수정 필요
+
 			// String.foramt("%.3", n) --> 소수 넷째자리에서 반올림 하여 세자리 표시
-			System.out.println(String.format("%.3f", (double)(score / student))); // 평균 넘는 학생들의 비율
-			
+			System.out.println(String.format("%.3f", (double) count / student * 100.000) + "%"); // 평균 넘는 학생들의 비율
+
 		}
 
 	}
