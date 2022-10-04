@@ -3,7 +3,6 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-// https://st-lab.tistory.com/165
 public class Main {
 	public static void main(String[] args) throws IOException {
 
