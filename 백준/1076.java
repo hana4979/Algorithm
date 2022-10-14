@@ -6,24 +6,17 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		String resistanceValue = "";
-		
-		for(int i = 1; i >= 0; i--) {
-			String resistanceColor = bf.readLine();
-			resistanceValue += colorValue(resistanceColor);
-		}
-		
-		String resistanceColor = bf.readLine();
-		// 저항의 곱 값만큼 String 형식의 0 붙여주기
-		for(int howMany = 0 ; howMany < colorValue(resistanceColor); howMany++)
-			resistanceValue += "0";
-		System.out.println(resistanceValue);
+		int firstColor = colorValue(bf.readLine()); // 입력받은 색깔을 숫자로 변환해 입력받기
+		int secondColor = colorValue(bf.readLine());
+		int thirdColor = colorValue(bf.readLine());
+
+		System.out.println((long) ((firstColor * 10 + secondColor) * Math.pow(10, thirdColor)));
 	}
-	
+
 	// 색상에 따른 저항 or 곱 값
 	public static int colorValue(String resColor) {
 		int value = 0;
-		switch(resColor) {
+		switch (resColor) {
 		case "black":
 			value = 0;
 			break;
@@ -60,7 +53,3 @@ public class Main {
 		return value;
 	}
 }
-
-// 220524 저항 값 int형태로 거듭제곱 사용 + 곱 값 string "0" 붙임 --> 실패
-// 처음부터 String 값으로 붙이기 --> 실패
-// 21억이 넘어가는 값 어떻게 '계산'해 표현할지 생각
