@@ -1,16 +1,14 @@
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-import java.util.Arrays;
-import java.util.ArrayList;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 
 		int n = Integer.parseInt(bf.readLine());
-		int[][] peopleSize = new int[n][1];
+		int[][] peopleSize = new int[n][2];
 
 		for (int i = 0; i < n; i++) {
 			StringTokenizer token = new StringTokenizer(bf.readLine(), " ");
@@ -18,33 +16,23 @@ public class Main {
 			peopleSize[i][1] = Integer.parseInt(token.nextToken()); // 키 입력
 		}
 
-		// 2차원 배열 복사
-		int[][] compareSize = new int[n][1];
+		// rank를 1로 설정해두고 나보다 덩치큰 사람만큼 ++ 해준 뒤 출력
+		// 굳이 배열을 정렬할 필요도 없고, rank 값을 따로 저장할 필요도 없음
 		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < 2; j++) {
-				compareSize[i][j] = peopleSize[i][j];
-			}
-		}
-		
-		// https://crazykim2.tistory.com/463 오류 왜 뜨냐 진짜 ㅡㅡ
-		// 정렬 후 순서대로 rank 부여, peopleSize 와 비교해 기존 배열 순서대로 rank 나열
-		Arrays.sort(compareSize, new Comparator<int[]>() {
-			@Override
-			public int compare(int[] o1, int[] o2) {
-				// 첫번째 기준 오름차순, 두번째 기준 오름차순
-				return o1[0] != o2[0] ? o1[0] - o2[0] : o1[1] - o2[1];
-			}
-		});
-
-		for (int i = 0; i < n; i++) {
+			int rank = 1; //
 			for (int j = 0; j < n; j++) {
-				if (compareSize[i][0] == peopleSize[j][0])
-					if (compareSize[i][1] == peopleSize[j][1])
-						System.out.print(j + " ");
-					else {
-						continue;
-					}
+				if (i == j)
+					continue; // 같은 것끼리 비교할 필요 X
+				// 무게가 같거나 더 나가고, 키가 더 크다면
+				if (peopleSize[i][0] < peopleSize[j][0] && peopleSize[i][1] < peopleSize[j][1])
+					rank++; // rank 뒤로 밀려남
 			}
+
+			System.out.print(rank + " ");
+
 		}
 	}
 }
+
+// https://st-lab.tistory.com/99 참고
+// arrayList.sort(arr, Comparator...) 로 정렬할 필요 없이 '브루투포스' 를 이용한 문제임으로 하나씩 비교해서 "rank+k" 로 랭크 설정하면 됨
