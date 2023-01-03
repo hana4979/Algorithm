@@ -10,29 +10,35 @@ public class Main {
 		StringTokenizer token = new StringTokenizer(bf.readLine(), " ");
 		int row = Integer.parseInt(token.nextToken());
 		int cul = Integer.parseInt(token.nextToken());
-		char[][] chessboard = new char[row][cul];
+		// 첫 시작이 'W' or 'B' 인 경우의 수 2가지가 존재하기 때문에 추후 확인 시 불필요한 오류를 방지하기 위해 boolean으로 받음
+		boolean[][] chessboard = new boolean[row][cul];
 
 		// 체스판에 값 저장
 		for (int i = 0; i < row; i++) {
 			String chess = bf.readLine();
 			for (int j = 0; j < cul; j++) {
-				chessboard[i][j] = chess.charAt(j);
+				if (chess.charAt(i) == 'W')
+					chessboard[i][j] = true;
+				else if (chess.charAt(i) == 'B')
+					chessboard[i][j] = false;
 			}
 		}
 
-		// 'B'이면 +1, 'W'이면 -1로 칠해야 할 정사각형 수 확인
-		int count = 0;
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < cul; j++) {
-				if (chessboard[i][j] == 'B')
+		// 참고 : https://st-lab.tistory.com/101
+		// 8 * 8 의 경우 (행 - 7) * (열 - 7) * 2(첫 시작이 W or B)의 경우의 수를 갖는다
+
+	}
+
+	public static int mapping(boolean[][] chessboard, char first, int count) {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (chessboard[i][j]) // 'W'일 경우
 					count++;
-				else // chessboard[i][j] == 'W'
+				else // 'B'일 경우
 					count--;
 			}
 		}
 
-		System.out.print(count / 2); // 하나는 'W'로 바뀌어야 함
+		return count;
 	}
 }
-
-//230102 : 8 X 8로 뽑아냈을 때 가장 적게 칠하는 경우를 어떻게 확인할지 고민
