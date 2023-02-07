@@ -3,59 +3,62 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.Arrays;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.Collection;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 
-		// 상근이가 가지고 있는 숫자 카드
 		int n = Integer.parseInt(bf.readLine());
-		Integer[] haveArr = new Integer[n];
 
-		StringTokenizer haveToken = new StringTokenizer(bf.readLine());
+		StringTokenizer hasToken = new StringTokenizer(bf.readLine());
 
-		for (int i = 0; i < n; i++)
-			haveArr[i] = Integer.parseInt(haveToken.nextToken());
-
-		// 주어진 숫자 카드
-		int m = Integer.parseInt(bf.readLine());
-		Integer[] givenArr = new Integer[m];
-		int[] freqArr = new int[m]; // 빈도수 저장할 배열
-		// 2차원 배열을 ArrayList로 바꾸고 contains 쓰는 방법을 몰라서 따로 생성
-
-		StringTokenizer givenToken = new StringTokenizer(bf.readLine());
-
-		for (int i = 0; i < m; i++) {
-			givenArr[i] = Integer.parseInt(givenToken.nextToken());
-			freqArr[i] = 0;
-		}
-
-		// .contains() 사용을 위해
-		ArrayList<Integer> givenList = new ArrayList<>(Arrays.asList(givenArr));
-
+		int[] hasArr = new int[n];
 		for (int i = 0; i < n; i++) {
-			Integer num = haveArr[i];
-
-			if (givenList.contains(num)) { // 주어진 수에 가지고 있는 수가 있는지 확인
-				freq(givenArr, freqArr, num);
-			}
+			hasArr[i] = Integer.parseInt(hasToken.nextToken());
 		}
 
-		// 출력
+		Arrays.sort(hasArr); // 상근이가 가지고 있는 수 정렬
+
+		int m = Integer.parseInt(bf.readLine());
+
+		HashMap<Integer, Integer> numMap = new HashMap<>(); // 몇 개 가지고 있는지 체크할 HashMap
+
+		StringTokenizer numToken = new StringTokenizer(bf.readLine());
+
 		for (int i = 0; i < m; i++) {
-			System.out.print(freqArr[i] + " ");
+			numMap.put(Integer.parseInt(numToken.nextToken()), 0);
+		}
+
+		Set<Integer> keys = numMap.keySet();
+		for (Integer key : keys) { // key 전체 출력
+			if (check(hasArr, key)) // 가지고 있는 숫자라면
+				numMap.put(key, numMap.get(key) + 1); // numMap의 value +1
+		}
+
+		Collection<Integer> values = numMap.values();
+		for (Integer value : values) {
+			System.out.print(value + " ");
 		}
 	}
 
-	// 각 숫자의 빈도수 알아보기
-	public static void freq(Integer[] givenArr, int[] freqArr, Integer num) {
-		for (int i = 0; i < givenArr.length; i++) { // row(행)만큼 조사
-			if (givenArr[i] == num) {
-				freqArr[i]++;
-			}
+	public static boolean check(int[] arr, int num) {
+		int low = 0;
+		int high = arr.length - 1;
+
+		while (low <= high) {
+			int mid = (low + high) / 2;
+			if (arr[mid] > num)
+				high = mid - 1;
+			else if (arr[mid] < num)
+				low = mid + 1;
+			else
+				return true;
 		}
+		return false;
 	}
 }
 
-// 시간 초과
+// 230207 : 1 1 0 0 0 0 1 1 이라는 납득하기 힘든 결과가 나옴
