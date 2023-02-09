@@ -3,9 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.Collection;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
@@ -13,52 +10,60 @@ public class Main {
 
 		int n = Integer.parseInt(bf.readLine());
 
-		StringTokenizer hasToken = new StringTokenizer(bf.readLine());
+		StringTokenizer token = new StringTokenizer(bf.readLine());
 
 		int[] hasArr = new int[n];
 		for (int i = 0; i < n; i++) {
-			hasArr[i] = Integer.parseInt(hasToken.nextToken());
+			hasArr[i] = Integer.parseInt(token.nextToken());
 		}
 
 		Arrays.sort(hasArr); // 상근이가 가지고 있는 수 정렬
 
 		int m = Integer.parseInt(bf.readLine());
 
-		HashMap<Integer, Integer> numMap = new HashMap<>(); // 몇 개 가지고 있는지 체크할 HashMap
-
-		StringTokenizer numToken = new StringTokenizer(bf.readLine());
+		token = new StringTokenizer(bf.readLine());
 
 		for (int i = 0; i < m; i++) {
-			numMap.put(Integer.parseInt(numToken.nextToken()), 0);
+			int num = Integer.parseInt(token.nextToken());
+			// 상한 - 하한 = 해당 숫자가 몇번 나왔는지
+			System.out.print(upperBound(hasArr, num) - lowerBound(hasArr, num) + " ");
 		}
 
-		Set<Integer> keys = numMap.keySet();
-		for (Integer key : keys) { // key 전체 출력
-			if (check(hasArr, key)) // 가지고 있는 숫자라면
-				numMap.put(key, numMap.get(key) + 1); // numMap의 value +1
-		}
-
-		Collection<Integer> values = numMap.values();
-		for (Integer value : values) {
-			System.out.print(value + " ");
-		}
 	}
 
-	public static boolean check(int[] arr, int num) {
+	// 범위의 하한선 구하기
+	public static int lowerBound(int[] arr, int num) {
 		int low = 0;
-		int high = arr.length - 1;
+		int high = arr.length;
 
-		while (low <= high) {
+		while (low < high) { // 같아질 때까지 반복
 			int mid = (low + high) / 2;
-			if (arr[mid] > num)
-				high = mid - 1;
-			else if (arr[mid] < num)
-				low = mid + 1;
-			else
-				return true;
+
+			if (num <= arr[mid]) // num이 중간값보다 작거나 같다면
+				high = mid; // 오른쪽 끝 인덱스를 중간값으로
+			else // arr[mid] < num
+				low = mid + 1; // 왼쪽 끝 인덱스를 중간값 + 1로
 		}
-		return false;
+
+		return low;
+	}
+
+	// 범위의 상한선 구하기
+	public static int upperBound(int[] arr, int num) {
+		int low = 0;
+		int high = arr.length; // 배열 길이로 설정해야 함
+
+		while (low < high) {
+			int mid = (low + high) / 2;
+
+			if (num < arr[mid]) // num이 중간값보다 작다면
+				high = mid; // 오른쪽 끝 인덱스를 중간값으로
+			else // arr[mid] <= num
+				low = mid + 1; // 왼쪽 끝 인덱스를 중간값 + 1로
+		}
+
+		return low;
 	}
 }
 
-// 230207 : 1 1 0 0 0 0 1 1 이라는 납득하기 힘든 결과가 나옴
+// 시간초과(왜지?)
