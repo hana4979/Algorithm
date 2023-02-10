@@ -23,12 +23,16 @@ public class Main {
 
 		token = new StringTokenizer(bf.readLine());
 
+		// 시간초과 해결방법 : 덧셈 연산이 많아질수록 성능저하(+ " ") --> StringBuilder로 문자열 연결
+		StringBuilder sb = new StringBuilder();
+		
 		for (int i = 0; i < m; i++) {
 			int num = Integer.parseInt(token.nextToken());
 			// 상한 - 하한 = 해당 숫자가 몇번 나왔는지
-			System.out.print(upperBound(hasArr, num) - lowerBound(hasArr, num) + " ");
+			sb.append(upperBound(hasArr, num) - lowerBound(hasArr, num)).append(' ');
 		}
-
+		
+		System.out.println(sb);
 	}
 
 	// 범위의 하한선 구하기
@@ -51,7 +55,9 @@ public class Main {
 	// 범위의 상한선 구하기
 	public static int upperBound(int[] arr, int num) {
 		int low = 0;
-		int high = arr.length; // 배열 길이로 설정해야 함
+		// QQQ : 배열 길이로 설정한 이유 (arr.length - 1로 하면 안 되나?)
+		// AAA : 이분 탐색은 사용자마다 구현 방식이 다르다. arr.length - 1로 잡으면 조건식이 달라져야 함
+		int high = arr.length;
 
 		while (low < high) {
 			int mid = (low + high) / 2;
@@ -66,4 +72,7 @@ public class Main {
 	}
 }
 
-// 시간초과(왜지?)
+/*
+ * upperBound lowerBound 알고리즘 참고
+ * https://www.acmicpc.net/source/55609805
+ */
