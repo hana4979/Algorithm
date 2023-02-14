@@ -12,10 +12,9 @@ public class Main {
 
 		HashSet<Object> strSet = new HashSet<>();
 
-		for (int i = 1; i <= rep; i++) { // 문자열 길이
-			for (int j = 0; j < rep; j++) { // 문자열 시작 위치
-				// 길이 초과 시 조건 달기
-				strSet.add(str.substring(j, i)); // 시작 위치(j)부터 문자열 길이(j)만큼 자르기
+		for (int i = 0; i < rep; i++) { // 문자열 시작 위치
+			for (int j = i + 1; j <= rep; j++) { // 문자열 길이
+				strSet.add(str.substring(i, j)); // 시작 위치부터 몇글자 뽑아낼 것인지
 			}
 		}
 
