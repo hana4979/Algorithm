@@ -28,9 +28,14 @@ public class Main {
 		 * key값 == 만들고자 하는 랜선 개수(N)
 		 * => 특정 개수에 대한 특정 길이 찾기
 		 */
-
+		
+		/*
+		 * min = 0, max = 0 이라면 upperBound 반환 값은 1이 되어야 함
+		 */
+		max++;
+		
 		int mid = 0;
-		while (max > min) {
+		while (min < max) {
 			mid = (max + min) / 2;
 
 			int count = 0;
@@ -40,13 +45,31 @@ public class Main {
 				count += arr[i] / mid;
 			}
 
-			if (n < count)
-				min = mid;
+			if (count < n)
+				// 더 많은 랜선을 요구하므로 작게 잘라야 함
+				max = mid;
 			else
-				max = mid + 1;
-
+				// 랜선 개수가 맞게 나와도 '최댓값'을 구해야 하기 때문에 min을 꾸준히 증가
+				min = mid + 1;
+			
+			/*
+			 * min = mid + 1
+			 * UpperBound(상한)은 찾고자 하는 특정 값을 초과하는 첫 위치를 반환
+			 * +1 을 하지 않았을 경우 소수점 반영이 안 되어(올림) 수가 되풀이 되기도 함
+			 * 백준 예제로 봐도 min 200 / max 201 에서 무한 반복
+			 */
+			
+			/*
+			System.out.println("max : " + max);
+			System.out.println("min : " + min);
+			*/
 		}
-
-		System.out.println(mid);
+		
+		/* 
+		 * UpperBound는 중복 원소 '바로 다음' 인덱스를 찾음
+		 * 따라서 -1 을 해주어야 원하는 랜선 개수(중복값)를 만들 수 있는 최대 길이를 출력 가능
+		 */
+		
+		System.out.println(mid - 1);
 	}
 }
