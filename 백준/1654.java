@@ -14,12 +14,13 @@ public class Main {
 
 		int[] arr = new int[k];
 
-		int min = 0; // 길이의 최소값
-		int max = 0; // 입력받은 값 중 최댓값
-
+		long min = 0; // 길이의 최소값
+		long max = 0; // 입력받은 값 중 최댓값
+		long mid = 0;
+		
 		for (int i = 0; i < k; i++) {
 			arr[i] = Integer.parseInt(bf.readLine());
-			if (arr[i] > max)
+			if (max < arr[i])
 				max = arr[i];
 		}
 
@@ -30,19 +31,22 @@ public class Main {
 		 */
 		
 		/*
-		 * min = 0, max = 0 이라면 upperBound 반환 값은 1이 되어야 함
+		 * min = 0, max = 1 의 경우
+		 * 43번째 줄 : count += arr[i] / mid; 에서 by zero 오류 발생
+		 * 1. max + 1 값을 탐색
+		 * 2. int의 최댓값까지의 범위가 주어졌으니 자료형을 long으로 바꿔주기
 		 */
 		max++;
 		
-		int mid = 0;
 		while (min < max) {
 			mid = (max + min) / 2;
 
-			int count = 0;
+			long count = 0;
 
 			// 중간 길이로 잘랐을 때 총 몇개의 랜선이 만들어지는지 확인
 			for (int i = 0; i < k; i++) {
-				count += arr[i] / mid;
+				// by zerp 오류 주의!
+				count += (arr[i] / mid);
 			}
 
 			if (count < n)
@@ -59,10 +63,6 @@ public class Main {
 			 * 백준 예제로 봐도 min 200 / max 201 에서 무한 반복
 			 */
 			
-			/*
-			System.out.println("max : " + max);
-			System.out.println("min : " + min);
-			*/
 		}
 		
 		/* 
@@ -70,6 +70,10 @@ public class Main {
 		 * 따라서 -1 을 해주어야 원하는 랜선 개수(중복값)를 만들 수 있는 최대 길이를 출력 가능
 		 */
 		
-		System.out.println(mid - 1);
+		// 얻어진 값(min)에 -1을 해야 최대 길이
+		System.out.println(min - 1);
 	}
 }
+
+// 알고리즘 : https://st-lab.tistory.com/269
+// 아예 min = 1 로 잡고 알고리즘 짜도 가능
