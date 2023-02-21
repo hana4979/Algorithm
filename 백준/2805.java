@@ -25,7 +25,7 @@ public class Main {
 			if (max < treeLength)
 				max = treeLength;
 		}
-
+		
 		int mid = 0;
 
 		while (min < max) {
@@ -35,25 +35,31 @@ public class Main {
 			int count = 0;
 
 			for (int i = 0; i < n; i++) {
-				count += tree[i] - mid;
+				int check = tree[i] - mid;
+				
+				// tree[i] - mid 값이 음수가 나온다면
+				if(check < 0)
+					check = 0;
+				
+				count += check;
 			}
-
+			
+			if (count < m)
+				max = mid;
+			else
+				min = mid + 1;
+			
 			/*
-			 * 다시 짜야 함
-			 * if(count < m)
-			 * 	max = mid;
-			 * else
-			 * 	min = mid + 1;
+			 * count == m 의 경우
+			 * 높이의 최댓값을 구해야 하기 때문에 min을 증가해야 함
 			 */
 
-			/*
-			 * System.out.println("max : " + max);
-			 * System.out.println("min : " + min);
-			 */
+			System.out.println("max : " + max);
+			System.out.println("min : " + min);
 
 		}
 
-		System.out.println(mid);
+		System.out.println(min - 1);
 
 	}
 }
