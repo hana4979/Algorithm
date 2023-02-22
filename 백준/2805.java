@@ -32,7 +32,8 @@ public class Main {
 			// Overflow 대비
 			mid = (max - min) / 2 + min;
 
-			int count = 0;
+			// 나무 길이 최대가 10억이라 overflow 발생 가능성 있음
+			long count = 0;
 
 			for (int i = 0; i < n; i++) {
 				int check = tree[i] - mid;
@@ -53,9 +54,6 @@ public class Main {
 			 * count == m 의 경우
 			 * 높이의 최댓값을 구해야 하기 때문에 min을 증가해야 함
 			 */
-
-			System.out.println("max : " + max);
-			System.out.println("min : " + min);
 
 		}
 
