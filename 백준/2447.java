@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 public class Main {
 
 	public static char[][] starArr;
+	static int bigCount; // N = 9 의
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
@@ -30,35 +31,48 @@ public class Main {
 			return;
 		}
 
-		// N = 3 인 경우까지만 구현
-		int count = 0; // 5번째는 공백
+		/*
+		 * N = 3 의 형태를 기본 형태로 잡음
+		 */
+		int smallCount = 0; // 5번째는 공백
 		for (int i = row; i < row + 3; i++) {
 			for (int j = col; j < col + 3; j++) {
-				count++; 
-				
-				if (count == 5)
+				smallCount++;
+
+				if (blank) { // blank == true
+					starArr[i][j] = ' ';
+				} else if (smallCount == 5) // 5번째 오는 모양 == 1*1로 가운데 뚫려야하는 부분
 					starArr[i][j] = ' ';
 				else {
 					starArr[i][j] = '*';
 				}
 			}
 		}
-
+		
+		/*
+		 * N > 3의 경우, N = 9 의 형태를 연달아 잇고 가운데를 (N/3) * (N/3) 크기로 뚫은 것
+		 */
+		
+		// 
 		int size = N / 3;
+		for (int i = row; i < size; i++) {
+			for (int j = col; j < size; j++) {
+				bigCount++;
+				
+				/*
+				 * N = 9의 경우 기본 형태가 ... 고민중.
+				 */
+				if (bigCount == N)
+					return;
+				else if (bigCount == 5)
+					star(i + 3, j + 3, N, true);
+				else
+					star(i + 3, j + 3, N, false);
+			}
+		}
 	}
 }
 
 /*
  * 1. N = 3 일때를 기본 형태로 잡고 N > 3 일때는 9 * 9 의 패턴이 있다! 까지는 알아냈으나 이를 배열에 저장할 생각은 못 함
- */
-
-/*
- * N = 3, 기본 형태를 아래와 같이 했을 떼
- * ***
- * * *
- * ***
- * 
- * N = 9, 기본 형태를 나열했을 때 
- * 1. 기본 형태 나열 기준, 가운데 ((N/3)3) * ((N/3)/3) 비우기
- * 2. 기본 형태 집합체 기준, 가운데 (N/3) * (N/3) 크기로 비우기
  */
