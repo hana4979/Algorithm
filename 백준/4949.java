@@ -10,13 +10,17 @@ public class Main {
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 
-		String str = bf.readLine();
+		String str = "";
 
-		while (!str.equals(".")) {
+		while (true) {
+
+			str = bf.readLine();
+
+			if (str.equals(".")) // 입력 종료문
+				break;
 
 			sb.append(balanceCheck(str)).append('\n');
 
-			str = bf.readLine(); // 새로운 입력
 		}
 
 		System.out.println(sb);
@@ -39,30 +43,28 @@ public class Main {
 				stack.push(c);
 
 			else if (stack.empty())
-				return "NO";
+				return "no";
 
 			else if (c == ')') {
 				if (stack.peek() == '(')
 					stack.pop();
 				else
-					return "NO";
+					return "no";
 
 			} else { // c == ']'
 				if (stack.peek() == '[')
 					stack.pop();
 				else
-					return "NO";
+					return "no";
 			}
 
 		}
 
 		if (stack.empty()) // 모든 괄호가 제 짝을 찾았다면
-			return "YES";
+			return "yes";
 		else
-			return "NO";
+			return "no";
 
 	}
 
 }
-
-// 230321 틀린 이유가 뭘까. 반례를 찾아보자.
