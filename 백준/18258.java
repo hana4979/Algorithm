@@ -2,7 +2,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Main {
 
@@ -14,33 +15,35 @@ public class Main {
 
 		int n = Integer.parseInt(bf.readLine());
 
-		ArrayList<Integer> queueList = new ArrayList<Integer>(); // list의 맨 앞에서 값이 삭제가 일어남에 따라 자동으로 당겨짐
+		Queue<Integer> queue = new LinkedList<>();
 		int queueSize = 0;
+		int last = 0; // 마지막으로 입력된 변수 저장
 
 		for (int i = 0; i < n; i++) {
 			token = new StringTokenizer(bf.readLine(), " ");
 
 			switch (token.nextToken()) {
 			case "push":
-				queueList.add(Integer.parseInt(token.nextToken())); // queue(List)에 데이터 추가
-				queueSize++;
+				last = Integer.parseInt(token.nextToken()); // 마지막에 push된 값 저장 위함
+				queue.offer(last); // queue에 데이터 추가
+				queueSize++; // 데이터 추가 후 사이즈 증가
 				break;
 
 			case "pop":
-				if (queueSize == 0) // queue(List)가 비었다면
+				if (queueSize == 0) // queue가 비었다면
 					sb.append(-1).append('\n');
 				else {
-					sb.append(queueList.remove(0)).append('\n'); // queue의 맨 앞의 값을 빼고 출력
-					queueSize--;
+					sb.append(queue.poll()).append('\n'); // queue의 첫번째 값을 반환하고 삭제
+					queueSize--; // 데이터 삭제 후 사이즈 감소
 				}
 				break;
 
 			case "size":
-				sb.append(queueSize).append('\n');
+				sb.append(queue.size()).append('\n');
 				break;
 
 			case "empty":
-				if (queueSize == 0)
+				if (queueSize == 0) // 큐가 비었다면
 					sb.append(1).append('\n');
 				else
 					sb.append(0).append('\n');
@@ -50,14 +53,14 @@ public class Main {
 				if (queueSize == 0)
 					sb.append(-1).append('\n');
 				else
-					sb.append(queueList.get(0)).append('\n');
+					sb.append(queue.peek()).append('\n'); // queue의 첫번째 값 반환
 				break;
 
 			case "back":
 				if (queueSize == 0)
 					sb.append(-1).append('\n');
 				else
-					sb.append(queueList.get(queueSize - 1)).append('\n');
+					sb.append(last).append('\n');
 				break;
 
 			}
@@ -66,5 +69,3 @@ public class Main {
 		System.out.println(sb);
 	}
 }
-
-// 230328 시간 초과 발생
