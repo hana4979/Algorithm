@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.ArrayList;
 
 public class Main {
@@ -12,7 +12,7 @@ public class Main {
 
 		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 
-		HashMap<String, String> commute = new HashMap<>();
+		HashSet<String> commute = new HashSet<>();
 		StringTokenizer token;
 
 		int n = Integer.parseInt(bf.readLine());
@@ -26,26 +26,28 @@ public class Main {
 			name = token.nextToken();
 			state = token.nextToken();
 
-			if (state.equals("leave")) { // 퇴근 상태라면
-				if (commute.containsKey(name))// key에 이름이 있을 때
-					commute.remove(name); // name과 같은 key값의 자료를 삭제
-				// commute.values().remove(value); 하면 값을 기준으로 삭제할 수 있음
+			if (state.equals("enter")) // 출근 처리
+				commute.add(name);
 
-			} else { // 출근 상태라면
-				if (!(commute.containsKey(name))) // key에 이름이 없을 때
-					commute.put(name, state); // HashMap에 직원 자료 추가
+			else if (state.equals("leave")) { // 퇴근 처리
+				if (commute.contains(name)) { // 해당 직원의 이름이 이미 있다면 (= 출근 상태라면)
+					commute.remove(name); // 이름 제거 (= 퇴근처리)
+				}
 			}
 		}
 
-		ArrayList<String> keySet = new ArrayList<>(commute.keySet());
+		ArrayList<String> list = new ArrayList<>(commute);
 
-		Collections.reverse(keySet); // key 역순 정렬
+		// Collections.reverse(list); // 리스트를 역순으로 정렬 후 수정
+		Collections.sort(list, Collections.reverseOrder()); // 리스트를 정렬 후 역순으로 된 새로운 리스트를 반환
 
-		for (String key : keySet) {
-			System.out.println(key);
+		for (String l : list) {
+			System.out.println(l);
 		}
 	}
 }
 
 // 상태 확인 후, HashMap에 key 유무에 따라 값을 넣다 뺐다 했으나 여전히 실패. 반례를 못 찾음.
 // HashSet으로 name만 받는 걸로 다시 풀기
+// Collections.reverse() 가 단순히 요소를 뒤집는다고 하기엔 결과값이 Collections.sort()와 다르지 않음
+// chatGPT에 따르면 결과값은 같으나 확실하게 내림차순으로 정렬하고 출력하는 것이 더 정확하므로, 정확도의 문제라고 한다.
