@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Deque;
 
 public class Main {
-	public static Deque<String> dq;
+	public static Deque<Integer> dq;
 	public static boolean isError = false;
 	public static boolean isReverse = false;
 
@@ -18,7 +18,7 @@ public class Main {
 
 		while (t-- > 0) {
 
-			dq = new LinkedList<String>();
+			dq = new LinkedList<>();
 			sb = new StringBuilder();
 			isError = false;
 			isReverse = false;
@@ -100,15 +100,17 @@ public class Main {
 			charValue = str.charAt(i);
 
 			if (charValue == 44 || i == str.length() - 1) { // 콤마가 왔거나 괄호 바로 전 숫자가 오면
-				dq.add(num); // dq에 값 추가
+				if (!num.equals("")) // num이 빈값이 아니면
+					dq.add(Integer.parseInt(num)); // dq에 값 추가 (num이 비어있어도 덱에 추가하면 사이즈는 1이 됨)
 				num = ""; // 초기화
 
 			} else
 				num += charValue; // 콤마가 아닐 경우 숫자 붙이기
 
 		}
+
 	}
 
 }
 
-// 230523 빈 배열이 입력되었을 때 error가 출력되지 않음
+// 16%에서 틀렸다는데 이유를 모르겠음
